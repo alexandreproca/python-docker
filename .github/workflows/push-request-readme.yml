@@ -19,10 +19,10 @@ jobs:
         uses: actions/checkout@v3
  
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-region: eu-central-1
-          role-to-assume: ${{ secrets.github-reader }}
+          role-to-assume: arn:aws:iam::981847621073:role/github-reader
           role-session-name: OIDCSession
  
       - run: aws s3 cp s3://dodeskaden-dev/README.md README.md
@@ -37,10 +37,10 @@ jobs:
         uses: actions/checkout@v3
  
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-region: eu-central-1
-          role-to-assume: ${{ secrets.github-dev-deploy }}
+          role-to-assume: arn:aws:iam::981847621073:role/github-dev-deploy
           role-session-name: OIDCSession
  
       - run: aws s3 cp README.md s3://dodeskaden-dev/README.md
@@ -53,10 +53,10 @@ jobs:
         uses: actions/checkout@v3
  
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-region: eu-central-1
-          role-to-assume: ${{ secrets.github-reader }}
+          role-to-assume: arn:aws:iam::981847621073:role/github-reader
           role-session-name: OIDCSession
  
       - run: aws s3 cp s3://dodeskaden-dev/README.md README.md
@@ -71,10 +71,10 @@ jobs:
         uses: actions/checkout@v3
  
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-region: eu-central-1
-          role-to-assume: ${{ secrets.Github-deploy-prod }}
+          role-to-assume: arn:aws:iam::981847621073:role/Github-deploy-prod
           role-session-name: OIDCSession
  
       - run: aws s3 cp README.md s3://dodeskaden-prod/README.md
