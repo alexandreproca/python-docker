@@ -1,10 +1,35 @@
-on: workflow_dispatch
+name: 'Push'
+ 
+# The workflow should only trigger on push events to the main branch
+on:
+  push:
+    branches:
+      - main
+ 
+# Required to get the ID Token that will be used for OIDC
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
 
   - name: Checkout repo
-        uses: actions/checkout@v3
+    uses: actions/checkout@v3
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2 # More information on this action can be found below in the 'AWS Credentials' section
-        with:
-          role-to-assume: arn:aws:iam::981846721073:role/my-github-actions-role
-          aws-region: eu-central-1
+  
+  - name: Configure AWS credentials
+    uses: aws-actions/configure-aws-credentials@v2 # More information on this action can be found below in the 'AWS Credentials' section
+    with:
+      role-to-assume: arn:aws:iam::981846721073:role/github-app-role
+      aws-region: eu-central-1
+
+  - name: Login to Amazon ECR
+    id: login-ecr
+    uses: aws-actions/amazon-ecr-login@v1
+
+  - name: Build, tag, and push docker image to Amazon ECR
+    env:
+      REGISTRY: 981846721073.dkr.ecr.aws-region-1.amazonaws.com
+      REPOSITORY: my-ecr-repo
+      IMAGE_TAG: ${{ github.sha }}
+    run: |
+      docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+      docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG 
