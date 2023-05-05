@@ -20,11 +20,11 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: eu-west-1
-          role-to-assume: ${{ secrets.READ_ROLE }}
+          aws-region: eu-central-1
+          role-to-assume: ${{ secrets.github-reader }}
           role-session-name: OIDCSession
  
-      - run: aws s3 cp s3://YOUR_DEV_BUCKET/README.md README.md
+      - run: aws s3 cp s3://dodeskaden-dev/README.md README.md
         shell: bash
  
   write-dev:
@@ -38,11 +38,11 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: eu-west-1
-          role-to-assume: ${{ secrets.DEV_DEPLOY_ROLE }}
+          aws-region: eu-central-1
+          role-to-assume: ${{ secrets.github-dev-deploy }}
           role-session-name: OIDCSession
  
-      - run: aws s3 cp README.md s3://YOUR_DEV_BUCKET/README.md
+      - run: aws s3 cp README.md s3://dodeskaden-dev/README.md
         shell: bash
  
   read-prod:
@@ -54,11 +54,11 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: eu-west-1
-          role-to-assume: ${{ secrets.READ_ROLE }}
+          aws-region: eu-central-1
+          role-to-assume: ${{ secrets.github-reader }}
           role-session-name: OIDCSession
  
-      - run: aws s3 cp s3://YOUR_PROD_BUCKET/README.md README.md
+      - run: aws s3 cp s3://dodeskaden-dev/README.md README.md
         shell: bash
  
   write-prod:
@@ -72,9 +72,9 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: eu-west-1
-          role-to-assume: ${{ secrets.PROD_DEPLOY_ROLE }}
+          aws-region: eu-central-1
+          role-to-assume: ${{ secrets.Github-deploy-prod }}
           role-session-name: OIDCSession
  
-      - run: aws s3 cp README.md s3://YOUR_PROD_BUCKET/README.md
+      - run: aws s3 cp README.md s3://dodeskaden-prod/README.md
         shell: bash

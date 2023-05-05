@@ -22,9 +22,9 @@ jobs:
           - Development
           - Production
         role_secret:
-          - READ_ROLE
-          - DEV_DEPLOY_ROLE
-          - PROD_DEPLOY_ROLE
+          - github-reader
+          - github-dev-deploy
+          - Github-deploy-prod
     runs-on: ubuntu-latest
     environment: ${{ matrix.environment }}
     steps:
@@ -34,11 +34,11 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: eu-west-1
+          aws-region: eu-central-1
           role-to-assume: ${{ secrets[matrix.role_secret] }}
           role-session-name: OIDCSession
  
-      - run: aws s3 cp s3://YOUR_DEV_BUCKET/README.md README.md
+      - run: aws s3 cp s3://dodeskaden-dev/README.md README.md
         shell: bash
  
   write-dev:
@@ -50,9 +50,9 @@ jobs:
           - Development
           - Production
         role_secret:
-          - READ_ROLE
-          - DEV_DEPLOY_ROLE
-          - PROD_DEPLOY_ROLE
+          - github-reader
+          - github-dev-deploy
+          - Github-deploy-prod
     runs-on: ubuntu-latest
     environment: ${{ matrix.environment }}
     steps:
@@ -62,11 +62,11 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: eu-west-1
+          aws-region: eu-central-1
           role-to-assume: ${{ secrets[matrix.role_secret] }}
           role-session-name: OIDCSession
  
-      - run: aws s3 cp README.md s3://YOUR_DEV_BUCKET/README.md
+      - run: aws s3 cp README.md s3://dodeskaden-dev/README.md
         shell: bash
  
   read-prod:
@@ -78,9 +78,9 @@ jobs:
           - Development
           - Production
         role_secret:
-          - READ_ROLE
-          - DEV_DEPLOY_ROLE
-          - PROD_DEPLOY_ROLE
+          - github-reader
+          - github-dev-deploy
+          - Github-deploy-prod
     runs-on: ubuntu-latest
     environment: ${{ matrix.environment }}
     steps:
@@ -90,11 +90,11 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: eu-west-1
+          aws-region: eu-central-1
           role-to-assume: ${{ secrets[matrix.role_secret] }}
           role-session-name: OIDCSession
  
-      - run: aws s3 cp s3://YOUR_PROD_BUCKET/README.md README.md
+      - run: aws s3 cp s3://dodeskaden-prod/README.md README.md
         shell: bash
  
   write-prod:
@@ -106,9 +106,9 @@ jobs:
           - Development
           - Production
         role_secret:
-          - READ_ROLE
-          - DEV_DEPLOY_ROLE
-          - PROD_DEPLOY_ROLE
+          - github-reader
+          - github-dev-deploy
+          - Github-deploy-prod
     runs-on: ubuntu-latest
     environment: ${{ matrix.environment }}
     steps:
@@ -118,9 +118,9 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: eu-west-1
+          aws-region: eu-central-1
           role-to-assume: ${{ secrets[matrix.role_secret] }}
           role-session-name: OIDCSession
  
-      - run: aws s3 cp README.md s3://YOUR_PROD_BUCKET/README.md
+      - run: aws s3 cp README.md s3://dodeskaden-prod/README.md
         shell: bash
