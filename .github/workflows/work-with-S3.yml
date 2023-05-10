@@ -1,0 +1,29 @@
+on : workflow_dispatch
+
+jobs:
+  deploy:
+    name: Upload to Amazon S3
+    runs-on: ubuntu-latest
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Configure AWS credentials from Dev account
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        role-to-assume: arn:aws:iam::981847621073:role/github-dev-deploy
+        aws-region: eu-central-1
+    - name: Copy files to the test website with the AWS CLI
+      run: |
+        aws s3 sync . s3://dodeskaden-dev
+    - name: Configure AWS credentials from Production account
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        role-to-assume: arn:aws:iam::981847621073:role/Github-deploy-prod
+        aws-region: eu-central-1
+    - name: Copy files to the production website with the AWS CLI
+      run: |
+        aws s3 sync . s3://dodeskaden-prod
