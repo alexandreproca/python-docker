@@ -1,10 +1,13 @@
 name: 'Build and ECR store'
  
 # The workflow should only trigger on push events to the main branch
-on:
-  push:
-    branches:
-      - main
+
+on: workflow_dispatch
+
+#  on:
+#  push:
+#    branches:
+#      - main
  
 # Required to get the ID Token that will be used for OIDC
 permissions:
