@@ -1,6 +1,7 @@
 name: 'Build and ECR store'
  
 # The workflow should only trigger on push events to the main branch
+# Deleted and recreated the IdP
 
 on:
  push:
