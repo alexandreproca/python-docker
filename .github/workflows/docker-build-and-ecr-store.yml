@@ -2,12 +2,10 @@ name: 'Build and ECR store'
  
 # The workflow should only trigger on push events to the main branch
 
-on: workflow_dispatch
-
-#  on:
-#  push:
-#    branches:
-#      - main
+on:
+ push:
+  branches:
+  - main
  
 # Required to get the ID Token that will be used for OIDC
 permissions:
@@ -26,7 +24,7 @@ jobs:
           uses: aws-actions/configure-aws-credentials@v2 # More information on this action can be found below in the 'AWS Credentials' section
           with:
             aws-region: eu-central-1
-            role-to-assume: arn:aws:iam::981846721073:role/github-app-role
+            role-to-assume: arn:aws:iam::981846721073:role/github-dev
             role-session-name: OIDCSession
 
         - name: Login to Amazon ECR
