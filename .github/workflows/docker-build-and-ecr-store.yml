@@ -26,8 +26,9 @@ jobs:
           uses: aws-actions/configure-aws-credentials@v2 # More information on this action can be found below in the 'AWS Credentials' section
           with:
             aws-region: eu-central-1
-            role-to-assume: arn:aws:iam::981846721073:role/github-dev
-            role-session-name: OIDCSession
+            role-to-assume: arn:aws:iam::981846721073:role/github-exid-push-pull
+            role-external-id: nakamura
+            role-session-name: exid-session
 
         - name: Login to Amazon ECR
           id: login-ecr
