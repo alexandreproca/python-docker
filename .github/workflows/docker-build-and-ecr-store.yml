@@ -27,7 +27,6 @@ jobs:
           with:
             aws-region: eu-central-1
             role-to-assume: arn:aws:iam::981846721073:role/github-exid-push-pull
-            role-external-id: nakamura
             role-session-name: exid-session
 
         - name: Login to Amazon ECR
