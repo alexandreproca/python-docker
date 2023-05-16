@@ -26,8 +26,6 @@ jobs:
           uses: aws-actions/configure-aws-credentials@v2 # More information on this action can be found below in the 'AWS Credentials' section
           with:
             aws-region: eu-central-1
-            aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws_secret_accesskey: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             role-to-assume: arn:aws:iam::981847621073:role/github-exid-push-pull
             role-session-name: github-session
 
