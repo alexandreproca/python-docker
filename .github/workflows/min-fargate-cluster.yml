@@ -4,9 +4,10 @@ Description: The CloudFormation template for the Fargate ECS Cluster.
 Parameters:
   Stage:
     Type: String
-     Default: dev
+    Default: dev
   ContainerPort:
     Type: Number
+    Default: 80
   ImageURI:
     Type: String
 
