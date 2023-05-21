@@ -97,24 +97,6 @@ Resources:
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
 
-  # Create a TaskDefinition with container details
-  TaskDefinition:
-    Type: AWS::ECS::TaskDefinition
-    Properties: 
-      Memory: 1024
-      Cpu: 512
-      NetworkMode: awsvpc
-      RequiresCompatibilities:
-        - 'FARGATE'
-      TaskRoleArn: !Ref ExecutionRole
-      ExecutionRoleArn: !Ref ExecutionRole
-      ContainerDefinitions:
-        - Name: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'Container']]
-          Image: !Ref ImageURI
-          PortMappings:
-            - ContainerPort: !Ref ContainerPort
-              HostPort: !Ref ContainerPort
-
   # Creat a security group for load balancer and open port 80 in bound from internet
   LoadBalancerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -173,26 +155,3 @@ Resources:
       LoadBalancerArn: !Ref LoadBalancer
       Port: 80
       Protocol: HTTP
-
-  # Create an ECS Service and add created Cluster, TaskDefintion, Subnets, TargetGroup and SecurityGroup
-  ECSService:
-    Type: AWS::ECS::Service
-    DependsOn: LoadBalancerListener
-    Properties:
-      ServiceName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'ECSService']]
-      Cluster: !Ref Cluster
-      TaskDefinition: !Ref TaskDefinition
-      DesiredCount: 2
-      LaunchType: FARGATE
-      NetworkConfiguration: 
-        AwsvpcConfiguration:
-          AssignPublicIp: ENABLED
-          Subnets:
-            - !Ref SubnetA
-            - !Ref SubnetB
-          SecurityGroups:
-            - !Ref ContainerSecurityGroup
-      LoadBalancers:
-        - ContainerName: !Join ['-', [!Ref Stage, !Ref 'AWS::AccountId', 'Container']]
-          ContainerPort: !Ref ContainerPort
-          TargetGroupArn: !Ref TargetGroup
