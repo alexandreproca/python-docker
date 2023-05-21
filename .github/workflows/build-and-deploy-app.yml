@@ -11,7 +11,7 @@ on : workflow_dispatch
    #- main
 
 jobs:
-    docker-build-and-push:
+    docker-build-and-deploy:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repo
@@ -29,6 +29,7 @@ jobs:
           uses: aws-actions/amazon-ecr-login@v1
 
         - name: Build, tag, and push docker image to Amazon ECR
+          id: build-image
           env:
             REGISTRY: ${{ steps.login-ecr.outputs.registry }}
             REPOSITORY: my-ecr-repo
