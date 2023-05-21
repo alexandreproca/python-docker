@@ -51,7 +51,7 @@ jobs:
           with:
             task-definition: task-definition-app.yml
             container-name: dev-981847621073-Container
-            image: ${{ steps.build-image.outputs.image }}
+            image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
         - name: Deploy Amazon ECS task definition
           uses: aws-actions/amazon-ecs-deploy-task-definition@v1
