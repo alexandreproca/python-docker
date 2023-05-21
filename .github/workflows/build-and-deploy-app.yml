@@ -47,7 +47,7 @@ jobs:
           id: task-def
           uses: aws-actions/amazon-ecs-render-task-definition@v1
           with:
-            task-definition: task-definition-app.json
+            task-definition: task-definition-app.yml
             container-name: dev-981847621073-Container
             image: ${{ steps.build-image.outputs.image }}
 
