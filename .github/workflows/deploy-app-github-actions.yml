@@ -45,13 +45,9 @@ jobs:
             
         - name: Deploy to AWS CloudFormation
           uses: aws-actions/aws-cloudformation-github-deploy@v1
-          env:
-            REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-            IMAGE_URI: $REGISTRY/$REPOSITORY:$IMAGE_TAG
           with:
-             name: new-stack
-             template: Fargate-Cluster.yml
-             parameter-overrides: "Stage=$STAGE,ContainerPort=8080,ImageURI=$IMAGE_URI"
+             name: min-stack
+             template: min-fargate-cluster.yml
              capabilities: CAPABILITY_NAMED_IAM
              
         - name: Fill in the new image ID in the Amazon ECS task definition
@@ -60,7 +56,7 @@ jobs:
           env:
            IMAGE_URI: $REGISTRY/$REPOSITORY:$IMAGE_TAG
           with:
-            task-definition: task-definition.json
+            task-definition: task-definition-app.yml
             container-name: my-container
             image: $IMAGE_URI
 
