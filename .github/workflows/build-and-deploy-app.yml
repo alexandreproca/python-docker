@@ -15,7 +15,7 @@ env:
  CONTAINER_PORT: 8080
  REPOSITORY: my-ecr-repo
  IMAGE_TAG: ${{ github.sha }}
- 
+ CLUSTER: FargateECSCluster
 
 jobs:
     docker-build-and-deploy:
@@ -47,8 +47,9 @@ jobs:
           uses: aws-actions/aws-cloudformation-github-deploy@v1
           env:
             REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+            IMAGE_URI: $REGISTRY/$REPOSITORY:$IMAGE_TAG
           with:
-             name: MyStack
+             name: $STAGE-$CLUSTER
              template: min-fargate-cluster.yml
-             parameter-overrides: "Stage=$STAGE,ContainerPort=$CONTAINER_PORT"
+             parameter-overrides: "Stage=$STAGE,ContainerPort=$CONTAINER_PORT,ImageURI=$IMAGE_URI"
              capabilities: CAPABILITY_NAMED_IAM
