@@ -1,4 +1,4 @@
-name: 'Build and deploy app'
+name: 'Build Deploy app with github actions'
  
 # The workflow should only trigger on push events to the main branch
 # Deleted and recreated the IdP
