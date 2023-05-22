@@ -56,7 +56,7 @@ jobs:
           env:
            IMAGE_URI: $REGISTRY/$REPOSITORY:$IMAGE_TAG
           with:
-            task-definition: task-definition-app.json
+            task-definition: task-definition-app.yml
             container-name: dev-981847621073-Container
             image: $IMAGE_URI
 
