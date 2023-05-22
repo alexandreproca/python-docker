@@ -50,6 +50,6 @@ jobs:
             IMAGE_URI: $REGISTRY/$REPOSITORY:$IMAGE_TAG
           with:
              name: $STAGE-$CLUSTER
-             template: min-fargate-cluster.yml
+             template: Fargate-Cluster.yml
              parameter-overrides: "Stage=$STAGE,ContainerPort=$CONTAINER_PORT,ImageURI=$IMAGE_URI"
              capabilities: CAPABILITY_NAMED_IAM
