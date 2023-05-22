@@ -49,7 +49,7 @@ jobs:
             REGISTRY: ${{ steps.login-ecr.outputs.registry }}
             IMAGE_URI: $REGISTRY/$REPOSITORY:$IMAGE_TAG
           with:
-             name: $STAGE-$CLUSTER
+             name: app-stack
              template: Fargate-Cluster.yml
              parameter-overrides: "Stage=$STAGE,ContainerPort=$CONTAINER_PORT,ImageURI=$IMAGE_URI"
              capabilities: CAPABILITY_NAMED_IAM
