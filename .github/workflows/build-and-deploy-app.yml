@@ -11,8 +11,11 @@ on : workflow_dispatch
    #- main
 
 env: 
+ STAGE: dev
+ CONTAINER_PORT: 8080
  REPOSITORY: my-ecr-repo
-
+ IMAGE_TAG: ${{ github.sha }}
+ 
 
 jobs:
     docker-build-and-deploy:
@@ -36,7 +39,6 @@ jobs:
           id: build-image
           env:
             REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-            IMAGE_TAG: ${{ github.sha }}
           run: |
             docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
             docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
@@ -48,21 +50,5 @@ jobs:
           with:
              name: MyStack
              template: min-fargate-cluster.yml
-             parameter-overrides: "MyParam1=myValue,MyParam2=${{ secrets.MY_SECRET_VALUE }}"
+             parameter-overrides: "Stage=$STAGE,ContainerPort=$CONTAINER_PORT"
              capabilities: CAPABILITY_NAMED_IAM
-       
-        - name: Fill in the new image ID in the Amazon ECS task definition
-          id: task-def
-          uses: aws-actions/amazon-ecs-render-task-definition@v1
-          with:
-            task-definition: task-definition-app.yml
-            container-name: dev-981847621073-Container
-            image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
-        - name: Deploy Amazon ECS task definition
-          uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-          with:
-            task-definition: ${{ steps.task-def.outputs.task-definition }}
-            service: ''
-            cluster: dev-981847621073-Cluster
-            wait-for-service-stability: true
