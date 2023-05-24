@@ -37,7 +37,7 @@ env:
   ECR_REPOSITORY: my-ecr-repo                 # set this to your Amazon ECR repository name
   ECS_SERVICE: github-actions-service         # set this to your Amazon ECS service name
   ECS_CLUSTER: github-actions-cluster         # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: .aws/github-actions-task.json       # set this to the p/ath to your Amazon ECS task definition
+  ECS_TASK_DEFINITION: .aws/github-actions-task1.json       # set this to the p/ath to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: github-actions-container     # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
